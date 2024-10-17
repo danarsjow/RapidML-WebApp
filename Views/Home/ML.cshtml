@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Linear Regression Plot";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".xlsx" required />
+    <button type="submit">Upload</button>
+</form>
+
+<div id="result"></div>
+
+@section Scripts {
+    <script>
+        document.getElementById('uploadForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/Plot/UploadFile', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+            document.getElementById('result').innerHTML = result.success ? `<img src="${result.imagePath}" alt="Plot" />` : 'Error generating plot.';
+        };
+    </script>
+}
+<img src="C:\Users\sis.guest\source\repos\Quick_ML\ExcelReader\wwwroot\Uploads\plot.png" />
+<asp:Image ID="Image1" runat="server" ImageUrl="C:\Users\sis.guest\source\repos\Quick_ML\ExcelReader\wwwroot\Uploads\plot.png" />
+
+<img src="Uploads\plot.png" />
